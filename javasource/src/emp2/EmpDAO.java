@@ -54,14 +54,46 @@ import static emp.JdbcUtil.*;
 	}
 	
 	// selectOne
-	public EmpVO selectOne(int empno) {
+//	public EmpVO selectOne(int empno) {
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		String sql = "select * from emp_temp where empno = ?";
+//		EmpVO vo = null;
+//		try {
+//			pstmt = con.prepareStatement(sql);
+//			pstmt.setInt(1, empno); // ? 세팅 => (숫자 : 물음표 순서, 값 : 받아오는 값)
+//			rs = pstmt.executeQuery();
+//			
+//			if(rs.next() ) {
+//				vo = new EmpVO();
+//				vo.setEmpno((rs.getInt("empno")));
+//				vo.setEname(rs.getString("ename"));
+//				vo.setJob(rs.getString("job"));
+//				vo.setMgr(rs.getInt("mgr"));
+//				vo.setHiredate(rs.getDate("hiredate"));
+//				vo.setSal(rs.getInt("sal"));
+//				vo.setComm(rs.getInt("comm"));
+//				vo.setDeptno(rs.getInt("deptno"));
+//				System.out.println();
+//			}
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			close(rs);
+//			close(pstmt);
+//		}
+//		return vo;
+//	}
+	
+	public EmpVO selectOne(String ename) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from emp_temp where empno = ?";
+		String sql = "select * from emp_temp where ename like ?";
 		EmpVO vo = null;
 		try {
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, empno); // ? 세팅 => (숫자 : 물음표 순서, 값 : 받아오는 값)
+			pstmt.setString(1, "%"+ename+"%"); // ? 세팅 => (숫자 : 물음표 순서, 값 : 받아오는 값)
 			rs = pstmt.executeQuery();
 			
 			if(rs.next() ) {

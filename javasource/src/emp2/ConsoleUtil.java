@@ -8,8 +8,13 @@ public class ConsoleUtil {
 	public int getEmp(Scanner sc) {
 		System.out.println("사원 번호를 입력하세요 : ");
 		int empno = Integer.parseInt(sc.nextLine());
-		
 		return empno;
+	}
+	
+	public String getEmpName(Scanner sc) {
+		System.out.println("사원 이름을 입력하세요 : ");
+		String ename = sc.nextLine();
+		return ename;
 	}
 	
 	public void printEmp(EmpVO vo) {
