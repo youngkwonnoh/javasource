@@ -1,0 +1,71 @@
+21.5.4
+
+가상 클래스 선택자 
+:link, :active, :hover
+:nth-child(3), :first-child
+
+가상 요소 선택자
+::before, ::after
+
+가로배치 : inline-block, float
+
+한글 로렘입숨도 있음 – 구글에서 사이트 검색 후 접속
+
+position : 배치 방법
+ - fixed : 화면 기준으로 지정한 위치에 고정(광고), top, left, right, bottom
+ - absolute : 기준(relative)을 준 후 기준을 중심으로 배치. 기준을 주지 않으면 화면을 기준으로 기준을 잡음
+ - relative : 기준(처음에 배치된 자신 요소 위치)을 중심으로 배치
+ - static : 기본
+
+
+이클립스 워크스페이스 새로 만들기
+파일 – 스위치 워크스페이스 – others – 원하는 곳
+windows – preferences에서
+general에서 utf-8,
+web에서 
+css, html, jsp파일즈도 다 utf8
+
+다이나믹 웹 프로젝트로 파일 생성
+톰캣 설치 후 jdk11 연결하고
+이클립스에서 서버 연결해준다.
+port 8090
+
+서버 연결 시 에러나면 http 포트 번호를 수정
+
+admin / 12345
+
+자바 웹 어플리케이션 : 
+프론트 엔드(html, css, javascript, jquery)
+백엔드(jsp/servlet)
+
+이클립스에서 서버연결 확인 후 
+help – 이클립스 마켓플레이스 접속 후 emmet 설치
+설치 완료 후 preferences – emmit에서 expand key에 jsp 추가
+
+정적 파일 => html, css, javascript, jquery =>
+웹서버(아파치 웹서버, nginx)
+동적 파일 => jsp/servlet => 웹 어플리케이션 서버(WAS) => 톰캣
+jsp/servlet : 클라이언트 입력값 가져오기 / 서버에서 클라이언트로 특정 값 전송
+
+
+jsp(java server page) => html + java코드
+servlet => html + java코드
+
+action : 동적 파일명을 적어준다
+servlet을 새로 만들면 무조건 서버를 껐다 켜야 한다.
+
+get => 한글 처리 잘 됨
+서블릿에 데이터를 전송할 때 데이터가 URL 뒤에 name=value 형태로 전송
+
+post => 한글 깨짐
+서블릿에 데이터를 전송할 때 TCP/IP 프로토콜 데이터의 HEAD 영역에 숨겨진 채 전송
+// 한글처리(post)
+request.setCharacterEncoding("utf-8");
+
+
+
+
+★ jsp파일 생성 시 build path 오류 날 때
+프로젝트의 build path에서 add library로 톰캣 추가해준다.
+https://m.blog.naver.com/PostView.nhn?blogId=kin412&logNo=220414297326&proxyReferer=https:%2F%2Fwww.google.com%2F
+https://thinkingblog.tistory.com/80
