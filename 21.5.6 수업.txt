@@ -1,0 +1,91 @@
+21.5.6
+
+
+https://simuing.tistory.com/entry/%EC%9D%B4%ED%81%B4%EB%A6%BD%EC%8A%A4-%EC%97%90%EB%9F%AC%ED%95%B4%EA%B2%B0-The-superclass-javaxservlethttpHttpServlet-was-not-found-on-the-Java-Build-Path
+
+position에서 간격을 정해줄 때 calc(~~% + ~~px); 로 기준 간격에 대해 위치를 정해줄 수 있다.
+
+white-space: nowrap; /* 공백을 기준으로 엔터(줄바꿈) 넣지 않기 */
+
+text-align: center; /* 문자 위치 지정 */ 
+
+
+
+
+미디어 쿼리 : 사이트에 접속하는 장치에 따라 CSS 스타일 변경.
+
+미디어 유형 : screen(스마트폰 포함한 컴퓨터 스크린), all, tv... and (조건) and (조건)
+
+
+
+
+
+https://fontawesome.com/
+
+다운로드 방식
+cdn 방식 : 웹에 올려놓고 사용하는 방식
+
+넥사크로
+
+
+servlet 
+
+doget에서 한글을 쓰면 인코딩을 무조건 넣어준다. 한글 깨질수 있어서
+request.setCharacterEncoding("utf-8");
+
+체크박스등 여러 선택을 받을 때에 배열로 값을 받으며 getParameterValues를 사용한다.
+예시
+String[] subject = request.getParameterValues("subject");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		for(String str:subject) {
+			out.print(str+"<br>");
+		}
+
+
+
+
+<select name="dinner" id="" multiple size="6">
+
+servlet 생성 시 url mappings에서 servlet을 별칭으로 만들어 사용할 수 있다.
+생성 시 안만들었나면 @WebServlet 이 부분에서 직접 바꿔도된다.
+
+
+multiple을 주면 여러개 선택이 가능해진다.
+
+Context : 서비스명
+
+
+
+jsp에서 자바코드 사용하기
+
+
+반드시 페이지 지시어가 있어야 한다.
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+import
+errorPage
+isErrorPage
+
+
+
+주석
+
+<!-- jsp에서 자바코드 사용하기 --> : 주석이 사용자에게 보인다.
+<%-- jsp에서 자바코드 사용하기 --%> : 주석이 사용자에게 보이지 않는다.
+
+
+
+<%
+	자바 코드 들어오는 곳 
+%>
+
+
+
+
+
+
+
+
+
