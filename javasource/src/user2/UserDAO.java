@@ -124,10 +124,10 @@ public class UserDAO {
 	// VALUES(user_seq.nextval, '송중기' 2004, '부산시', '01012381238')
 	public int insert(String userName, int birthYear, String addr, String mobile) {
 	// public int insert(UserVO vo) {
+		PreparedStatement pstmt = null;
 		String sql = "insert into userTBL(no, userName, birthYear, addr, mobile)";
 		sql += "VALUES(user_seq.nextval, ?, ?, ?, ?)";
 		
-		PreparedStatement pstmt = null;
 		int result = 0;
 		try {
 			pstmt = con.prepareStatement(sql);
