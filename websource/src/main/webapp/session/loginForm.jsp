@@ -1,3 +1,4 @@
+<%@ page import="domain.LoginVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,8 +15,16 @@
 </head>
 <body>
 <div class="container">
-	<!-- <form action="info_result2.jsp"method="post"> -->
-	<form action="../Info"method="post">
+<%
+	// login 세션 정보가 있다면 '아이디'님 반값습니다.
+	LoginVO login = (LoginVO)session.getAttribute("login");
+	// logout 버튼 보여주기
+	if(login!=null) {
+		out.print("<h3>" + login.getUserid() + "님 반갑습니다.</h3>");
+		out.print("<button type='button' class='btn btn-primary' onclick=\"location.href='logout.jsp'\">로그아웃</button>");
+	} else { // login 세션 정보가 없다면 로그인 할 수 있는 폼 보여주기
+%>
+	<form action="../LoginProc"method="post">
 	  	<div class="form-group">
 		    <label for="userid">ID</label>
     		<input type="text" class="form-control" name="userid" id="userid" aria-describedby="idHelp">
@@ -27,6 +36,12 @@
   		</div>
    		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>
+<%} %>
 </div>
+<script>
+</script>
+
+
+
 </body>
 </html>
