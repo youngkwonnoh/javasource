@@ -2,6 +2,8 @@ package test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +29,18 @@ public class CartAdd extends HttpServlet {
 		// 세션에 담기
 		HttpSession session = request.getSession();
 		session.setAttribute("product", product);
+		
+		// 기존 장바구니를 가져온 후 현재 선택된 제품 추가
+		List<String> product_list = (ArrayList<String>)session.getAttribute("product_list");
+		// 세션에 담기
+		if(product_list==null) {
+			product_list = new ArrayList<String>();
+			product_list.add(product);
+			session.setAttribute("product_list", product_list);
+		} else {
+			product_list.add(product);
+		}
+		
 		
 		// 링크 페이지 제공(페이지 이동) => 장바구니 보기
 		response.setContentType("text/html;charset=utf-8");
