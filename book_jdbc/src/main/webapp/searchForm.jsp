@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<form action="">
+<form action="searchProcess.jsp" method="get">
 	<div class="form-row">
 		<div class="form-group col-6">
-			<select name="criteria" id="" class="form-control">
+			<select name="criteria" id="criteria" class="form-control">
 				<option value="code">코드</option>
 				<option value="writer">작가</option>
 			</select>
 		</div>
 		<div class="form-group col-6">
 			<input type="text" name="keyword" id="keyword" placeholder="제목 입력"
-				required class="form-control">
+				required class="form-control" />
 		</div>
 	</div>
 	<div>
-		<button type="submit" class="btn btn-search">검색</button>
+		<button type="submit" class="btn btn-success">검색</button>
 		<button type="reset" class="btn btn-secondary">취소</button>
 	</div>
 </form>

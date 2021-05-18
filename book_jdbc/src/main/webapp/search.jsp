@@ -1,5 +1,10 @@
+<%@page import="java.util.List"%>
+<%@page import="book.domain.BookVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	List<BookVO> searchList = (List<BookVO>)request.getAttribute("searchList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +53,14 @@
 								</tr>
 							</thead>
 							<tbody> <%-- 검색 도서 목록 보기 --%>
-
+								<%for(BookVO vo:searchList) { %>
+								<tr>
+									<td><%=vo.getCode()%></td>
+									<td><%=vo.getTitle()%></td>
+									<td><%=vo.getWriter()%></td>
+									<td><%=vo.getPrice()%></td>
+								</tr>
+								<%}%>
 							</tbody>
 						</table>
 					</div>
@@ -67,10 +79,12 @@
 	</div>
 	<script>
 	$(function() {
+		$("#myList a[href='#search']").tab('show');
+		
 		$("#myList a[href='#all']").on('click', function() {
-			location.href="list.jsp";
+			location.href="listProcess.jsp";
 		})
-	}
+	})
 	</script>
 </body>
 </html>

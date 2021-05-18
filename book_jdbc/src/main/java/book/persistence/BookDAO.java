@@ -38,7 +38,8 @@ public class BookDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+			close(rs);
+			close(pstmt);
 		}
 		return list;
 	}
@@ -63,4 +64,62 @@ public class BookDAO {
 		return result;
 	}
 	
+	public int delete(int code) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "delete from bookTBL where code=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, code);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int update(int code, int price) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "update bookTBL set price=? where code=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, price);
+			pstmt.setInt(2, code);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<BookVO> searchList(String criteria, String keyword) {
+		List<BookVO> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select * from bookTBL where "+ criteria + " = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, keyword);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BookVO vo = new BookVO();
+				vo.setCode(rs.getInt("code"));
+				vo.setTitle(rs.getString("title"));
+				vo.setWriter(rs.getString("writer"));
+				vo.setPrice(rs.getInt("price"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
 }
