@@ -3,7 +3,7 @@
 <form action="searchProcess.jsp" method="get">
 	<div class="form-row">
 		<div class="form-group col-6">
-			<select name="criteria" id="criteria" class="form-control">
+			<select name="criteria" id="" class="form-control">
 				<option value="code">코드</option>
 				<option value="writer">작가</option>
 			</select>

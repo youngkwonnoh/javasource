@@ -39,10 +39,7 @@
 			</div>
 			<div class="col-8">
 				<div class="tab-content" id="list-home">
-					<div class="tab-pane fade show active" id="insert" role="tabpanel" aria-labelledby="list-home-list">
-						<%@include file="insertForm.jsp" %>
-					</div>
-					<div class="tab-pane fade" id="all" role="tabpanel"	aria-labelledby="list-profile-list">
+					<div class="tab-pane fade" id="search" role="tabpanel"	aria-labelledby="list-profile-list">
 						<table class="table">
 							<thead>
 								<tr>
@@ -66,9 +63,6 @@
 					</div>
 					<div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="list-messages-list">
 						<%@include file="deleteForm.jsp" %>
-					</div>
-					<div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="list-settings-list">
-						<%@include file="searchForm.jsp" %>
 					</div>
 					<div class="tab-pane fade" id="modify" role="tabpanel" aria-labelledby="list-settings-list">
 						<%@include file="modifyForm.jsp" %>
