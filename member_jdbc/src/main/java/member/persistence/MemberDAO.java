@@ -80,4 +80,28 @@ public class MemberDAO {
 		}
 		return result;
 	}
+	
+	// 회원가입
+	public int insert(MemberVO vo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "insert into memberTBL(userid, password, name, gender, email)";
+			sql += "values(?, ?, ?, ?, ?)";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, vo.getUserid());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getName());
+			pstmt.setString(4, vo.getGender());
+			pstmt.setString(5, vo.getEmail());
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

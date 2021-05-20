@@ -10,29 +10,29 @@
 	String newPassword = request.getParameter("new_password");
 	String confirmPassword = request.getParameter("confirm_password");
 	
+	
 	if(!newPassword.equals(confirmPassword)){
 		// response.sendRedirect("modifyForm.jsp");
 		out.print("<script>");
 		out.print("history.back()");
 		out.print("</script>");
-	} 
-	
-	//userid 가져오기
-	MemberVO loginVO = (MemberVO)session.getAttribute("loginVO");
-	
-	// db 작업
-	Connection con = JDBCUtil.getConnection();
-	MemberDAO dao = new MemberDAO(con);
-	int result = dao.update(loginVO.getUserid(), currentPassword, confirmPassword);
-	// 성공 => commit / 세션해제 / loginForm
-	if(result > 0) {
-		JDBCUtil.commit(con);
-		session.removeAttribute("loginVO");
-		response.sendRedirect("loginForm.jsp");
 	} else {
-	// 실패 => rollback / modifyForm
-		JDBCUtil.rollback(con);
-		response.sendRedirect("modifyForm.jsp");
+		//userid 가져오기
+		MemberVO loginVO = (MemberVO)session.getAttribute("loginVO");
+		Connection con = JDBCUtil.getConnection();
+	
+		// db 작업
+		MemberDAO dao = new MemberDAO(con);
+		int result = dao.update(loginVO.getUserid(), currentPassword, confirmPassword);
+		// 성공 => commit / 세션해제 / loginForm
+		if(result > 0) {
+			JDBCUtil.commit(con);
+			session.removeAttribute("loginVO");
+			response.sendRedirect("loginForm.jsp");
+		} else {
+		// 실패 => rollback / modifyForm
+			JDBCUtil.rollback(con);
+			response.sendRedirect("modifyForm.jsp");
+		}
 	}
-	JDBCUtil.close(con);
 %>

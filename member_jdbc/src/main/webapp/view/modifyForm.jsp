@@ -49,7 +49,7 @@ $(function() {
 })
 </script>
 <%--폼 검증 --%>
-<script>/*
+<script>
 $(function() {
 	$("#confirm_password").change(function() {
 		var new_password = $("#new_password").val();
@@ -59,7 +59,7 @@ $(function() {
 			$("#confirm_password").focus();
 		}
 	})
-})*/
+})
 </script>
 <%-- 버튼 이벤트 --%>
 <script src="../js/command.js"></script>
