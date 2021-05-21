@@ -25,12 +25,10 @@
 	if(result > 0) {
 		JDBCUtil.commit(con);
 		response.sendRedirect("loginForm.jsp");
-	} else {
+	} else { // 실패 - rollback / joinForm.jsp
 		JDBCUtil.rollback(con);
 		response.sendRedirect("joinForm.jsp");
 	}
-	
-	// 실패 - rollback / joinForm.jsp
-	
-	
+	JDBCUtil.close(con);
+		
 %>
