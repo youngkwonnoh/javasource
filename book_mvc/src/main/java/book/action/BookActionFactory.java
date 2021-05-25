@@ -20,6 +20,10 @@ public class BookActionFactory {
 			action = new BookInsertAction("/list.do");
 		} else if(cmd.equals("/delete.do")) {
 			action = new BookDeleteAction("/list.do");
+		} else if(cmd.equals("/modify.do")) {
+			action = new BookModifyAction("/list.do");
+		} else if(cmd.equals("/search.do")) {
+			action = new BookSearchAction("search.jsp");
 		}
 		
 		return action;

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<form action="searchProcess.jsp" method="get">
+<form action="search.do" method="get">
 	<div class="form-row">
 		<div class="form-group col-6">
 			<select name="criteria" id="" class="form-control">
