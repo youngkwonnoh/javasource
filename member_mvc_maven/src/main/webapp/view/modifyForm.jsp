@@ -1,9 +1,10 @@
 <%@page import="member.domain.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ include file="../layout/header.jsp" %>
 <%
-	MemberVO loginVO = (MemberVO)session.getAttribute("loginVO");
+	// MemberVO loginVO = (MemberVO)session.getAttribute("loginVO");
 %>
 <form id="modifyform" action="../modify.do" method="post">
 	<div class="card"  style="width: 40rem;margin:40px auto;">	
@@ -38,7 +39,8 @@
 </form>
 <script>
 	// let name = '홍길동';
-	let name = '<%=loginVO.getName()%>';
+	<%--let name = '<%=loginVO.getName()%>';--%>
+	let name='${loginVO.name}';
 </script>
 <%--로그인 후 메뉴 --%>
 <script src="../js/menu.js"></script>

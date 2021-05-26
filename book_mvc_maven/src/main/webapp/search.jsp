@@ -2,8 +2,9 @@
 <%@page import="book.domain.BookVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-	List<BookVO> searchList = (List<BookVO>)request.getAttribute("searchList");
+	// List<BookVO> searchList = (List<BookVO>)request.getAttribute("searchList");
 %>
 <!DOCTYPE html>
 <html>
@@ -50,14 +51,22 @@
 								</tr>
 							</thead>
 							<tbody> <%-- 검색 도서 목록 보기 --%>
-								<%for(BookVO vo:searchList) { %>
+								<%-- <%for(BookVO vo:searchList) {
 								<tr>
 									<td><%=vo.getCode()%></td>
 									<td><%=vo.getTitle()%></td>
 									<td><%=vo.getWriter()%></td>
 									<td><%=vo.getPrice()%></td>
 								</tr>
-								<%}%>
+								<%}%> --%>
+								<c:forEach var="vo" items="${searchList}">
+									<tr>
+										<td>${vo.code}</td>
+										<td>${vo.title}</td>
+										<td>${vo.writer}</td>
+										<td>${vo.price}</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>

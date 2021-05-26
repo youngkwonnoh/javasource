@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	UserVO vo = (UserVO)request.getAttribute("vo");
+	// UserVO vo = (UserVO)request.getAttribute("vo");
 %>
 <!DOCTYPE html>
 <html>
@@ -19,19 +19,23 @@
 		<form action="update.do" method="post">
 			<div class="form-group">
 				<label for="no">번호</label>
-				<input type="text" class="form-control"	id="no" value="<%=vo.getNo()%>" name="no" readonly>
+				<%--<input type="text" class="form-control"	id="no" value="<%=vo.getNo()%>" name="no" readonly> --%>
+				<input type="text" class="form-control"	id="no" value="${vo.no}" name="no" readonly>
 			</div>
 			<div class="form-group">
 				<label for="username">이름</label>
-				<input type="text" class="form-control" id="username" value="<%=vo.getUsername()%>" name="username" readonly>
+				<%-- <input type="text" class="form-control" id="username" value="<%=vo.getUsername()%>" name="username" readonly>--%>
+				<input type="text" class="form-control" id="username" value="${vo.username}" name="username" readonly>
 			</div>
 			<div class="form-group">
 				<label for="addr">주소</label>
-				<input type="text" class="form-control" id="addr" value="<%=vo.getAddr()%>" name="addr">
+				<%--<input type="text" class="form-control" id="addr" value="<%=vo.getAddr()%>" name="addr"> --%>
+				<input type="text" class="form-control" id="addr" value="${vo.addr}" name="addr">
 			</div>
 			<div class="form-group">
 				<label for="mobile">전화번호</label>
-				<input type="text" class="form-control" id="mobile" value="<%=vo.getMobile()%>" name="mobile">
+				<%--<input type="text" class="form-control" id="mobile" value="<%=vo.getMobile()%>" name="mobile"> --%>
+				<input type="text" class="form-control" id="mobile" value="${vo.mobile}" name="mobile">
 			</div>
 			<button type="submit" class="btn btn-primary">전체목록</button>
 			<button type="submit" class="btn btn-info">수정</button>

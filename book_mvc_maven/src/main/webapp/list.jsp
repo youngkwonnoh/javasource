@@ -2,8 +2,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-	List<BookVO> list = (List<BookVO>)request.getAttribute("list");
+	// List<BookVO> list = (List<BookVO>)request.getAttribute("list");
 
 %>
 <!DOCTYPE html>
@@ -54,14 +55,22 @@
 								</tr>
 							</thead>
 							<tbody> <%-- 도서 목록 보기 --%>
-								<% for(BookVO vo:list) {%>
+								<%--<% for(BookVO vo:list) {
 								<tr>
 									<td><%=vo.getCode()%></td>
 									<td><%=vo.getTitle()%></td>
 									<td><%=vo.getWriter()%></td>
 									<td><%=vo.getPrice()%></td>
 								</tr>
-								<%} %>
+								<%} %>--%>
+								<c:forEach var="vo" items="${list}">
+									<tr>
+										<td>${vo.code}</td>
+										<td>${vo.title}</td>
+										<td>${vo.writer}</td>
+										<td>${vo.price}</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>

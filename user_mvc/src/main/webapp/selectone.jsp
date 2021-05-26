@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	UserVO vo = (UserVO)request.getAttribute("vo");
+	// UserVO vo = (UserVO)request.getAttribute("vo");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,19 +21,23 @@
 		<form>
 			<div class="form-group">
 				<label for="no">번호</label>
-				<input type="text" class="form-control"	id="no" value="<%=vo.getNo()%>" readonly>
+				<%--<input type="text" class="form-control"	id="no" value="<%=vo.getNo()%>" readonly> --%>
+				<input type="text" class="form-control"	id="no" value="${vo.no}" readonly>
 			</div>
 			<div class="form-group">
 				<label for="username">이름</label>
-				<input type="text" class="form-control" id="username" value="<%=vo.getUsername()%>" readonly>
+				<%--<input type="text" class="form-control" id="username" value="<%=vo.getUsername()%>" readonly> --%>
+				<input type="text" class="form-control" id="username" value="${vo.username}" readonly>
 			</div>
 			<div class="form-group">
 				<label for="addr">주소</label>
-				<input type="text" class="form-control" id="addr" value="<%=vo.getAddr()%>" readonly>
+				<%--<input type="text" class="form-control" id="addr" value="<%=vo.getAddr()%>" readonly> --%>
+				<input type="text" class="form-control" id="addr" value="${vo.addr}" readonly>
 			</div>
 			<div class="form-group">
 				<label for="mobile">전화번호</label>
-				<input type="text" class="form-control" id="mobile" value="<%=vo.getMobile()%>" readonly>
+				<%-- <input type="text" class="form-control" id="mobile" value="<%=vo.getMobile()%>" readonly>--%>
+				<input type="text" class="form-control" id="mobile" value="${vo.mobile}>" readonly>
 			</div>
 			<button type="submit" class="btn btn-primary">전체목록</button>
 			<button type="submit" class="btn btn-danger">삭제</button>
@@ -51,11 +55,13 @@
 			})
 			$(".btn-danger").click(function(e) {
 				e.preventDefault(); // submit 기능 막기
-				location.href="remove.do?no=<%=vo.getNo()%>";
+				<%--location.href="remove.do?no=<%=vo.getNo()%>";--%>
+				location.href="remove.do?no=${vo.no}";
 			})
 			$("button:last").click(function(e) {
 				e.preventDefault(); // submit 기능 막기
-				location.href="modify.do?no=<%=vo.getNo()%>";
+				<%--location.href="modify.do?no=<%=vo.getNo()%>";--%>
+				location.href="modify.do?no=${vo.no}";
 			})
 		})
 	</script>
