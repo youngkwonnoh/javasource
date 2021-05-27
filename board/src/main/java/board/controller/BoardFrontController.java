@@ -32,7 +32,7 @@ public class BoardFrontController extends HttpServlet {
 		
 		ActionForward af = null;
 		try {
-			action.execute(request, response);
+			af = action.execute(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

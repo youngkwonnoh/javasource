@@ -8,10 +8,13 @@
 			<h3 class="box-title">Password Check</h3>
 		</div>
 		<div style="height:20px"></div>
-		<form name="pwdCheck" method="post" action="">
+		<form name="pwdCheck" method="post" action="../qRemove.do">
 			<div class="box-body">
 				<div class="form-group">
 					<input type="password" name="password" class="form-control" size="10" maxlength='10'>
+				</div>
+				<div class="form-group">
+					<input type="hidden" name="bno" class="form-control" value="<%=request.getParameter("bno")%>">
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary">확인</button>

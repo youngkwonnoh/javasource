@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%> <%@include file="../include/header.jsp"%>
       <h3 class="box-title">Board Write</h3>
     </div>
     <div style="height:20px"></div>
-    <form action="" method="" role="form" id="writeForm">
+    <form action="../qWrite.do" method="post" role="form" id="writeForm" enctype="multipart/form-data">
       <div class="box-body">
         <div class="form-group row">
           <label for="name" class="col-sm-2 col-form-label">작성자</label>
