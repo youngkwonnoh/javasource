@@ -54,6 +54,9 @@
 					<button type="button" class="btn btn-primary" id="list">목록보기</button>
 				</div>
 				<div style="height:20px"></div>
+				<input type="hidden" name="re_ref" value="${vo.re_ref}">
+				<input type="hidden" name="re_seq" value="${vo.re_seq}">
+				<input type="hidden" name="re_lev" value="${vo.re_lev}">
 			</div>
 		</form>
 	</div>

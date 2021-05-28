@@ -48,7 +48,7 @@ public class BoardDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			String sql = "select bno, title, name, regdate, readcount from board order by bno desc";
+			String sql = "select bno, title, name, regdate, readcount, re_lev from board order by re_ref desc, re_seq asc";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -58,6 +58,7 @@ public class BoardDAO {
 				vo.setName(rs.getString("name"));
 				vo.setRegdate(rs.getDate("regdate"));
 				vo.setReadcount(rs.getInt("readcount"));
+				vo.setRe_lev(rs.getInt("re_lev"));
 				list.add(vo);
 			}
 			
@@ -77,7 +78,7 @@ public class BoardDAO {
 		ResultSet rs = null;
 		
 		try {
-			String sql = "select bno, name, title, content, attach from board where bno=?";
+			String sql = "select bno, name, title, content, attach, re_ref, re_seq, re_lev from board where bno=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, bno);
 			rs = pstmt.executeQuery();
@@ -88,6 +89,10 @@ public class BoardDAO {
 				vo.setTitle(rs.getString("title"));
 				vo.setContent(rs.getString("content"));
 				vo.setAttach(rs.getString("attach"));
+				// reply 필요한 정보
+				vo.setRe_ref(rs.getInt("re_ref"));
+				vo.setRe_seq(rs.getInt("re_seq"));
+				vo.setRe_lev(rs.getInt("re_lev"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -147,6 +152,95 @@ public class BoardDAO {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	// replyInsert()
+	public int replyInsert(BoardVO vo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		try {
+			String sql = "update board set re_seq = re_seq + 1 where re_ref=? and re_seq>?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, vo.getRe_ref());
+			pstmt.setInt(2, vo.getRe_seq());
+			
+			pstmt.executeUpdate();
+			commit(con);
+			close(pstmt);
+			
+			sql = "insert into board(bno, name, password, title, content, attach, re_ref, re_seq, re_lev)";
+			sql += "values(board_seq.nextval, ?, ?, ?, ?, null, ?, ?, ?)";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(4, vo.getContent());
+			pstmt.setInt(5, vo.getRe_ref());
+			pstmt.setInt(6, vo.getRe_seq()+1);
+			pstmt.setInt(7, vo.getRe_lev()+1);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	// 조회수 업데이트
+	// readCountUpdate()
+	public int readCountUpdate(int bno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "update board set readcount = readcount + 1 where bno = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bno);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	// searchList() => like
+	public List<BoardVO> searchList(String criteria, String keyword) {
+		List<BoardVO> list = new ArrayList<BoardVO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			String sql = "select bno, title, name, regdate, readcount, re_lev from board ";
+			sql += "where "+ criteria + " like ? order by re_ref desc, re_seq asc";
+			
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%" + keyword + "%");
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVO vo = new BoardVO();
+				vo.setBno(rs.getInt("bno"));
+				vo.setTitle(rs.getString("title"));
+				vo.setName(rs.getString("name"));
+				vo.setRegdate(rs.getDate("regdate"));
+				vo.setReadcount(rs.getInt("readcount"));
+				vo.setRe_lev(rs.getInt("re_lev"));
+				list.add(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+		
+		return list;
 	}
 	
 }

@@ -21,8 +21,10 @@ public class BoardUpdateAction implements Action {
 		Map<String, String> dataMap = util.uploadFile(request);
 		
 		BoardVO vo = new BoardVO();
+		vo.setBno(Integer.parseInt(dataMap.get("bno")));
 		vo.setTitle(dataMap.get("title"));
 		vo.setContent(dataMap.get("content"));
+		vo.setPassword(dataMap.get("password"));
 		if(dataMap.containsKey("attach"))
 			vo.setAttach(dataMap.get("attach"));
 		
@@ -30,7 +32,7 @@ public class BoardUpdateAction implements Action {
 		boolean updateFlag = service.update(vo);
 		
 		if(!updateFlag) {
-			path = "view/qna_board_modify.jsp";
+			path = "/qModify.do?bno=" + dataMap.get("bno");
 		}
 		
 		return new ActionForward(path, true);

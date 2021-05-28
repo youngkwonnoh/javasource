@@ -7,7 +7,7 @@
 			<h3 class="box-title">Board Reply</h3>
 		</div>
 		<div style="height:20px"></div>
-		<form action="" method="post" role="form">
+		<form action="/qReply.do" method="post" role="form">
 			<div class="box-body">
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">작성자</label>
@@ -45,6 +45,9 @@
 					<button type="reset" class="btn btn-danger">취소</button>
 				</div>
 				<div style="height:20px"></div>
+				<input type="hidden" name="re_ref" value='<%=request.getParameter("re_ref")%>'/>
+				<input type="hidden" name="re_seq" value='<%=request.getParameter("re_seq")%>'/>
+				<input type="hidden" name="re_lev" value='<%=request.getParameter("re_lev")%>'/>
 			</div>
 		</form>
 	</div>

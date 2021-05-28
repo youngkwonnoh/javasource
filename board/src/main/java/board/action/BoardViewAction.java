@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BoardViewAction implements Action {
 	
-	private String path;
+	private String path; // view/qna_board_view.jsp
 	
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

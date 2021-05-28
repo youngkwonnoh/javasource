@@ -14,11 +14,10 @@ public class BoardViewService {
 		
 		Connection con = getConnection();
 		BoardDAO dao = new BoardDAO(con);
-		
+						
+		// 내용 가져오기
 		BoardVO vo = dao.getRow(bno); 
-		
 		close(con);
-		
 		return vo;
 	}
 	

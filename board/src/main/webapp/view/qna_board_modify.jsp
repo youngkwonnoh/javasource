@@ -53,6 +53,7 @@
 					%>
 					</div>
 				</div>
+				<input type="hidden" name="bno" value="${vo.bno}" />
 				<div style="height:20px"></div>
 				<div class="box-footer text-center">
 					<button type="submit" class="btn btn-primary">수정</button>

@@ -5,7 +5,7 @@
     pageEncoding="UTF-8"%>
 <%
 	String fileName = request.getParameter("fileName");
-	String downPath = "c:\\upload";
+	String downPath = "d:\\upload";
 	
 	// java.lang.IllegalStateException: 이 응답을 위해 getOutputStream()이 이미 호출되었습니다.
 	out.clear();
