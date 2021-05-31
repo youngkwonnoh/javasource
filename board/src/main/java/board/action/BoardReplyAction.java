@@ -1,5 +1,7 @@
 package board.action;
 
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,13 +30,21 @@ public class BoardReplyAction implements Action {
 		vo.setRe_ref(re_ref);
 		vo.setRe_seq(re_seq);
 		vo.setRe_lev(re_lev);
+		int bno = Integer.parseInt(request.getParameter("bno"));
+		
+		// 페이지 나누기 정보
+		int page = Integer.parseInt(request.getParameter("page"));
+		String criteria = request.getParameter("criteria");
+		String keyword = URLEncoder.encode(request.getParameter("keyword"), "utf-8");
 		
 		BoardReplyService service = new BoardReplyService();
 		boolean replyFlag = service.reply(vo);
 		
 		if(!replyFlag) {
-			path = "view/qna_board_reply.jsp?re_ref=" + re_ref + "&re_seq=" + re_seq + "&re_lev=" + re_lev;
-		}
+			path = "/qReplyView.do?bno=" + bno + "&page=" + page + "&criteria=" + criteria + "&keyword=" + keyword;
+		} else {
+			path += "?page=" + page + "&criteria=" + criteria + "&keyword=" + keyword;
+		}	
 		
 		return new ActionForward(path, true);
 	}

@@ -71,11 +71,14 @@ pageEncoding="UTF-8"%> <%@include file="../include/header.jsp"%>
             <small class="text-muted" id="file">(파일크기 : 2MB)</small>
           </div>
         </div>
+        <input type="hidden" name="page" value="<%=request.getParameter("page")%>"/>
+		<input type="hidden" name="criteria" value="<%=request.getParameter("criteria")%>"/>
+		<input type="hidden" name="keyword" value='<%=request.getParameter("keyword")%>'/>
         <div style="height:20px"></div>
         <div class="form-group text-center">
           <button type="submit" class="btn btn-primary">등록</button>
           <button type="reset" class="btn btn-danger">다시작성</button>
-          <button type="button" class="btn btn-warning" id="list" name="list">
+          <button type="button" class="btn btn-warning" id="list">
             목록보기
           </button>
         </div>
@@ -87,8 +90,18 @@ pageEncoding="UTF-8"%> <%@include file="../include/header.jsp"%>
 </section>
 <script>
 $(function() {
+	// 등록 버튼 클릭 시 - 1. submit 기능 중지 2. page 요소의 value 값을 1로 변경 3.submit
+	$(".btn-primary").click(function(e) {
+		e.preventDefault();
+		$("[name='page']").val("1");
+		$("form").submit();
+	})
 	$("#list").click(function() {
-		location.href="../qList.do";
+		let page = $("[name='page']").val();
+		let criteria = $("[name='criteria']").val();
+		let keyword = $("[name='keyword']").val();
+		
+		location.href="../qList.do?page=" + page + "&criteria=" + criteria + "&keyword" + keyword;
 	})
 })
 </script>

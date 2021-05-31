@@ -9,7 +9,7 @@
 			<h3 class="box-title">Read Board</h3>
 		</div>
 		<div style="height:20px"></div>
-		<form action="" method="post" role="form">
+		<form action="" method="post">
 			<div class="box-body">
 				<div class="form-group row">
 					<label for="name" class="col-sm-2 col-form-label">글쓴이</label>
@@ -43,7 +43,7 @@
 						}
 					%>
 						<a href="view/download.jsp?fileName=${vo.attach}"><%=attachName%></a>
-						<%--<a href="view/download.jsp?fileName=${vo.attach}">${vo.attach}</a>--%>
+						<%-- <a href="view/download.jsp?fileName=${vo.attach}">${vo.attach}</a> --%>
 					</div>
 				</div>
 				<div style="height:10px"></div>
@@ -54,13 +54,20 @@
 					<button type="button" class="btn btn-primary" id="list">목록보기</button>
 				</div>
 				<div style="height:20px"></div>
-				<input type="hidden" name="re_ref" value="${vo.re_ref}">
-				<input type="hidden" name="re_seq" value="${vo.re_seq}">
-				<input type="hidden" name="re_lev" value="${vo.re_lev}">
+				<input type="hidden" name="re_ref" value="${vo.re_ref}"/>
+				<input type="hidden" name="re_seq" value="${vo.re_seq}"/>
+				<input type="hidden" name="re_lev" value="${vo.re_lev}"/>
 			</div>
 		</form>
 	</div>
 </section>
+<%-- 버튼 클릭 시 보내야 할 내용 --%>
+<form action="" method="get" role="form">
+	<input type="hidden" name="bno" value="${vo.bno}"/>
+	<input type="hidden" name="page" value="${searchVO.page}"/>
+	<input type="hidden" name="criteria" value="${searchVO.criteria}"/>
+	<input type="hidden" name="keyword" value="${searchVO.keyword}"/>
+</form>
 <script>
 	let bno = ${vo.bno};
 </script>

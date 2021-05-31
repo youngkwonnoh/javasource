@@ -94,3 +94,76 @@ values(board_seq.nextval, '댓글러2', '12345', 'Re:데이터베이스', 'Re:�
 select bno, title, re_ref, re_seq, re_lev
 from board where re_ref = 127 order by re_ref desc, re_seq asc;
 
+
+
+
+-- 페이지 나누기 : rownum(가상 컬럼) 조회된 결과값에 번호를 매겨줌
+select rownum, bno, title from board;
+select rownum, bno, title from board order by bno desc;
+
+select rownum, bno, title from board where rownum > 0;
+select rownum, bno, title from board where rownum <= 10;
+
+-- rownum을 사용할 때 oreder by 구문이 들어오는 경우 주의해서 사용
+-- order by 구문에 index 컬럼이 들어오면 상관이 없지만 index가 아닌 컬럼이 들어오는 경우
+select rownum, bno, title from board where rownum <= 10
+order by re_ref desc, re_seq asc;
+
+-- 제대로 된 번호를 매길 수 없음
+select rownum, bno, title from board
+order by re_ref desc, re_seq asc;
+
+-- order by index 컬럼이 아닌 경우 : 인라인 쿼리 사용 
+select rownum, bno, title
+from (select rownum, bno, title from board
+	  where bno > 0
+	  order by re_ref desc, re_seq asc)
+where rownum <= 10;
+
+
+-- 가장 최신글(댓글을 원본글에 포함된 상태로)을 추출한 후 rownum을 붙여서 10개 가져오기
+select rownum, A.*
+from (select bno, title, name, regdate, readcount, re_lev from board
+	  where bno > 0
+	  order by re_ref desc, re_seq asc) A
+where rownum <= 10;
+
+-- 100개의 게시물 / 한 페이지에 10개씩 게시물 보여주기
+-- 1 page => 1 ~ 10
+-- 1 => (사용자가 누른 페이지번호 - 1) * 10 / 사용자가 누른 페이지 번호 * 한 페이지에 보여줄 게시물 수 
+select rnum, title, name
+from(select rownum rnum, A.*
+	from (select bno, title, name, regdate, readcount, re_lev from board
+		  where bno > 0
+	  	  order by re_ref desc, re_seq asc) A
+	where rownum <= 10)
+where rnum > 0;
+
+-- 2 page => 11 ~ 20
+select rnum, title, name
+from(select rownum rnum, A.*
+	from (select bno, title, name, regdate, readcount, re_lev from board
+		  where bno > 0
+	  	  order by re_ref desc, re_seq asc) A
+	where rownum <= 20)
+where rnum > 10;
+
+select count(*) from board;
+
+select count(*) from board where title like '%데이터베이스%';
+
+-- 검색
+select rnum, title, name
+from(select rownum rnum, A.*
+	from (select bno, title, name, regdate, readcount, re_lev from board
+		  where title like '%데이터베이스%' and bno > 0
+	  	  order by re_ref desc, re_seq asc) A
+	where rownum <= 10)
+where rnum > 0;
+
+
+
+
+
+
+

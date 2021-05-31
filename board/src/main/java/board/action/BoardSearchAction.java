@@ -25,7 +25,7 @@ public class BoardSearchAction implements Action {
 		List<BoardVO> list = service.search(criteria, keyword);
 		
 		request.setAttribute("list", list);
-		request.setAttribute("searchVO", new SearchVO(criteria, keyword));
+		//request.setAttribute("searchVO", new SearchVO(criteria, keyword));
 		
 		return new ActionForward(path, false);
 	}

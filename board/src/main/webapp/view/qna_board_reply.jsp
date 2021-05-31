@@ -45,9 +45,15 @@
 					<button type="reset" class="btn btn-danger">취소</button>
 				</div>
 				<div style="height:20px"></div>
-				<input type="hidden" name="re_ref" value='<%=request.getParameter("re_ref")%>'/>
-				<input type="hidden" name="re_seq" value='<%=request.getParameter("re_seq")%>'/>
-				<input type="hidden" name="re_lev" value='<%=request.getParameter("re_lev")%>'/>
+				<%-- 댓글 추가 --%>
+				<input type="hidden" name="bno" value="${vo.bno}"/>
+				<input type="hidden" name="re_ref" value="${vo.re_ref}"/>
+				<input type="hidden" name="re_seq" value="${vo.re_seq}"/>
+				<input type="hidden" name="re_lev" value="${vo.re_lev}"/>
+				<%-- 페이지 나누기 때문에 추가 --%>
+				<input type="hidden" name="page" value="${searchVO.page}"/>
+				<input type="hidden" name="criteria" value="${searchVO.criteria}"/>
+				<input type="hidden" name="keyword" value="${searchVO.keyword}"/>
 			</div>
 		</form>
 	</div>

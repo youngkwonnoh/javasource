@@ -1,5 +1,6 @@
 package board.action;
 
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,13 +29,20 @@ public class BoardUpdateAction implements Action {
 		if(dataMap.containsKey("attach"))
 			vo.setAttach(dataMap.get("attach"));
 		
+		// 페이지 나누기 후 추가
+		int page = Integer.parseInt(dataMap.get("page"));
+		String criteria = dataMap.get("criteria");
+		String keyword = URLEncoder.encode(dataMap.get("keyword"), "utf-8");
+		
+		
 		BoardUpdateService service = new BoardUpdateService();
 		boolean updateFlag = service.update(vo);
 		
 		if(!updateFlag) {
-			path = "/qModify.do?bno=" + dataMap.get("bno");
-		}
-		
+			path = "/qModify.do?bno=" + dataMap.get("bno") + "&page=" + page + "&criteria=" + criteria + "&keyword=" + keyword;
+		} else {
+			path += "?page=" + page + "&criteria=" + criteria + "&keyword=" + keyword;
+		}		
 		return new ActionForward(path, true);
 	}
 

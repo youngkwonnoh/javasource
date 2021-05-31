@@ -2,22 +2,17 @@ package board.service;
 
 import java.sql.Connection;
 
-import board.domain.BoardVO;
 import board.persistence.BoardDAO;
 
 import static board.persistence.JDBCUtil.*;
-
-public class BoardViewService {
-	// read()
-	public BoardVO read(int bno) {
-		
+public class BoardTotalRowService {
+	public int total(String criteria, String keyword) {
 		Connection con = getConnection();
 		BoardDAO dao = new BoardDAO(con);
-						
-		// 내용 가져오기
-		BoardVO vo = dao.getRow(bno); 
+		int total = dao.totalRows(criteria, keyword);
+		
 		close(con);
-		return vo;
+		
+		return total;
 	}
-	
 }

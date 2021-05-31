@@ -1,5 +1,7 @@
 package board.action;
 
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,13 +18,19 @@ public class BoardReadCountUpdateAction implements Action {
 		
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		
+		// 페이지 나누기 후 추가
+		int page = Integer.parseInt(request.getParameter("page"));
+		String criteria = request.getParameter("criteria");
+		String keyword = URLEncoder.encode(request.getParameter("keyword"), "utf-8");
+		
+		
 		BoardReadCountUpdateService service = new BoardReadCountUpdateService();
 		boolean countFlag = service.readCountUpdate(bno);
 		
 		if(!countFlag) {
-			path = "/qList.do";
+			path = "/qList.do?page=" + page + "&criteria=" + criteria + "&keyword=" + keyword;
 		} else {
-			path += "?bno="+bno;
+			path += "?bno="+ bno + "&page=" + page + "&criteria=" + criteria + "&keyword=" + keyword;
 		}
 		
 		return new ActionForward(path, true);

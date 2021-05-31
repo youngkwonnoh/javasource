@@ -15,6 +15,9 @@
 				</div>
 				<div class="form-group">
 					<input type="hidden" name="bno" class="form-control" value="<%=request.getParameter("bno")%>">
+					<input type="hidden" name="page" class="form-control" value="<%=request.getParameter("page")%>">
+					<input type="hidden" name="criteria" class="form-control" value="<%=request.getParameter("criteria")%>">
+					<input type="hidden" name="keyword" class="form-control" value="<%=request.getParameter("keyword")%>">
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary">확인</button>

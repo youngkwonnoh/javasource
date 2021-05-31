@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import board.domain.BoardVO;
+import board.domain.SearchVO;
 
 import static board.persistence.JDBCUtil.*;
 
@@ -43,13 +44,48 @@ public class BoardDAO {
 	}
 	
 	// 게시글 전체 가져오기 = getList()
-	public List<BoardVO> getList() {
+	public List<BoardVO> getList(SearchVO search) {
+		
+		// 사용자가 누른 페이지 번호 * 한 페이지에 보여줄 게시물 수
+		int start = search.getPage()*search.getAmount();
+		// (사용자가 누른 페이지번호 - 1) * 한 페이지에 보여줄 게시물 수 
+		int limit = (search.getPage()-1)*search.getAmount();
+		
 		List<BoardVO> list = new ArrayList<BoardVO>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			String sql = "select bno, title, name, regdate, readcount, re_lev from board order by re_ref desc, re_seq asc";
-			pstmt = con.prepareStatement(sql);
+			// 페이지 나누기 전
+			// String sql = "select bno, title, name, regdate, readcount, re_lev from board order by re_ref desc, re_seq asc";
+			StringBuilder sql = new StringBuilder();
+			
+			if(!search.getCriteria().isEmpty()) { // 검색 리스트 요청
+				sql.append("select rnum, bno, title, name, regdate, readcount, re_lev ");
+				sql.append("from(select rownum rnum, A.* ");
+				sql.append("from(select bno, title, name, regdate, readcount, re_lev ");
+				sql.append("from board ");
+				sql.append("where " + search.getCriteria() + " like ? and bno > 0 order by re_ref desc, re_seq asc) A ");
+				sql.append("where rownum <= ?) ");
+				sql.append("where rnum > ?");
+				
+				pstmt = con.prepareStatement(sql.toString());
+				pstmt.setString(1, "%" + search.getKeyword() + "%");
+				pstmt.setInt(2, start);
+				pstmt.setInt(3, limit);
+			} else { // 일반 리스트 요청
+				sql.append("select rnum, bno, title, name, regdate, readcount, re_lev ");
+				sql.append("from(select rownum rnum, A.* ");
+				sql.append("from(select bno, title, name, regdate, readcount, re_lev ");
+				sql.append("from board ");
+				sql.append("where bno > 0 order by re_ref desc, re_seq asc) A ");
+				sql.append("where rownum <= ?) ");
+				sql.append("where rnum > ?");
+				
+				pstmt = con.prepareStatement(sql.toString());
+				pstmt.setInt(1, start);
+				pstmt.setInt(2, limit);
+			}
+			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				BoardVO vo = new BoardVO();
@@ -94,7 +130,7 @@ public class BoardDAO {
 				vo.setRe_seq(rs.getInt("re_seq"));
 				vo.setRe_lev(rs.getInt("re_lev"));
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
@@ -210,37 +246,66 @@ public class BoardDAO {
 		return result;
 	}
 	
-	// searchList() => like
-	public List<BoardVO> searchList(String criteria, String keyword) {
-		List<BoardVO> list = new ArrayList<BoardVO>();
+	// searchList() => like => like % 페이지 나누기 전
+//	public List<BoardVO> searchList(String criteria, String keyword) {
+//		List<BoardVO> list = new ArrayList<BoardVO>();
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		try {
+//			String sql = "select bno, title, name, regdate, readcount, re_lev from board ";
+//			sql += "where "+ criteria + " like ? order by re_ref desc, re_seq asc";
+//			
+//			pstmt = con.prepareStatement(sql);
+//			pstmt.setString(1, "%" + keyword + "%");
+//			rs = pstmt.executeQuery();
+//			
+//			while(rs.next()) {
+//				BoardVO vo = new BoardVO();
+//				vo.setBno(rs.getInt("bno"));
+//				vo.setTitle(rs.getString("title"));
+//				vo.setName(rs.getString("name"));
+//				vo.setRegdate(rs.getDate("regdate"));
+//				vo.setReadcount(rs.getInt("readcount"));
+//				vo.setRe_lev(rs.getInt("re_lev"));
+//				list.add(vo);
+//			}
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			close(rs);
+//			close(pstmt);
+//		}
+//		return list;
+//	}
+	
+	// 전체 게시물 수 구하기 + 검색 게시물 수
+	public int totalRows(String criteria, String keyword) {
+		String sql = "";
+		int total = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			String sql = "select bno, title, name, regdate, readcount, re_lev from board ";
-			sql += "where "+ criteria + " like ? order by re_ref desc, re_seq asc";
-			
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, "%" + keyword + "%");
+			if(!criteria.isEmpty()) { // 검색 리스트 요청 시
+				sql = "select count(*) from board where " + criteria + " like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%" + keyword + "%");
+			} else { // 일반 전체 리스트 요청 시
+				sql = "select count(*) from board";
+				pstmt = con.prepareStatement(sql);
+			}
 			rs = pstmt.executeQuery();
 			
-			while(rs.next()) {
-				BoardVO vo = new BoardVO();
-				vo.setBno(rs.getInt("bno"));
-				vo.setTitle(rs.getString("title"));
-				vo.setName(rs.getString("name"));
-				vo.setRegdate(rs.getDate("regdate"));
-				vo.setReadcount(rs.getInt("readcount"));
-				vo.setRe_lev(rs.getInt("re_lev"));
-				list.add(vo);
+			if(rs.next()) {
+				total = rs.getInt(1);
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+			close(rs);
+			close(pstmt);
 		}
-		
-		return list;
+		return total;
 	}
 	
 }
