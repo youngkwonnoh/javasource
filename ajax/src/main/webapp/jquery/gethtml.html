@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body onload="gethtml()">
+	<div class="container">
+		<ul>
+			<li>메뉴1</li>
+			<li>메뉴2</li>
+			<li>메뉴3</li>
+		</ul>
+	</div>
+	<div></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+function gethtml() {
+	$.ajax({
+		url:'../data.data.html',
+		method:'get', //type : 'get'
+		dataType : 'html',
+		success:function(data) {
+			// alert('성공');
+			$("div:last-of-type").html(data);
+		},
+		error : function(xhr, textStatus, errorThrown) {
+			$("div:last-of-type").html("에러");
+		}
+	})
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.container {
+		display : flex;
+		background : Lightblue;
+	}
+	.box {
+		width : 100px;
+		height : 100px;
+		display : flex;
+		justify-content : center;
+		align-items : center;
+	}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="box">메뉴 1</div>
+		<div class="box">메뉴 2</div>
+		<div class="box">메뉴 3</div>
+		<div class="box">메뉴 4</div>
+	</div>
+	<div id="content"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+	// 메뉴4 요소 가져오기 + 이벤트 리스너 연결
+	$(".container .box:last-child").click(function(){
+		$.ajax({
+			url : "../data/school.xml",
+			success : function(data) {
+				let title = $(data).find("title").text();
+				let time = $(data).find("time").text();
+				let teacher = $(data).find("teacher").text();
+				
+				let resText = "<ul><li>title : " + title + "</li>";
+				resText += "<li>time : " + time + "</li>"
+				resText += "<li>teacher : " + teacher + "</li>"
+				
+				$("#content").html(resText);
+			},
+			error : function(xhr, textStatus, error) {
+			$("#content").html(xhr.status);
+		}
+		})
+	})
+</script>
+</body>
+</html>

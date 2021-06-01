@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="wrap"></div>
+<!-- data/dataset.xml 가져온 후 화면에 보여주기(테이블 형태로) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>	
+<script>
+	let wrap = $(".wrap");
+	let resText = "<table><tr><th>id</th><th>first_name</th><th>last_name</th><th>email</th><th>gender</th>"
+	
+	$.ajax({
+		url : "../data/dataset.xml",
+		success : function(data){
+			$(data).find("record").each(function(i, element) {
+				var id = $(this).find("id").text();
+				var first_name = $(this).find("first_name").text();
+				var last_name = $(this).find("last_name").text();
+				var email = $(this).find("email").text();
+				var gender = $(this).find("gender").text();
+				
+				resText += "<tr>";
+				resText += "<td>" + id + "</td>";
+				resText += "<td>" + first_name + "</td>";
+				resText += "<td>" + last_name + "</td>";
+				resText += "<td>" + email + "</td>";
+				resText += "<td>" + gender + "</td>";
+				resText += "</tr>";
+			})
+			wrap.html(resText);
+		},
+		error : function(xhr, textStatus, error){
+			wrap.html("데이터를 가져올 수 없습니다.");
+		}
+	})
+</script>
+</body>
+</html>

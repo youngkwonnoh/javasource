@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<button id="get">GET</button>
+		<button id="post">POST</button>
+	</div>
+	<h1>비동기식 폼 전송</h1>
+	<form action="">
+		<div>
+			<label for="id">아이디</label>
+			<input type="text" id="id" name="id"/>
+		</div>
+		<div>
+			<label for="age">나이</label>
+			<input type="text" id="age" name="age"/>
+		</div>
+	</form>
+	<div id="ajaxReturn"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>	
+<script>
+	$("#get").click(function() {
+		callAjax("get");
+	})
+	
+	$("#post").click(function() {
+		callAjax("post");
+	})
+	function callAjax(type) {
+		
+		var formData = $("form").serializeArray();
+		console.log(formData);
+		
+		$.ajax({
+			type : type, // method
+			url : "sendFormAjax1.jsp",
+			// data : form.serialize(),
+			data : formData,
+			success : function(data) {
+				$("#ajaxReturn").html(data);
+			},
+			error : function(){
+				$("#ajaxReturn").html("에러");
+			}
+		})
+	}	
+</script>
+</body>
+</html>

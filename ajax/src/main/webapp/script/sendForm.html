@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<button id="get">GET</button>
+		<button id="post">POST</button>
+	</div>
+	<h1>비동기식 폼 전송</h1>
+	<form action="">
+		<div>
+			<label for="id">아이디</label>
+			<input type="text" id="id" name="id"/>
+		</div>
+		<div>
+			<label for="age">나이</label>
+			<input type="text" id="age" name="age"/>
+		</div>
+	</form>
+<script>
+	let getBtn = document.querySelector("#get").addEventListener('click', getSend);
+	let postBtn = document.querySelector("#post").addEventListener('click', postSend);
+	
+	// id와 age 요소의 값을 가져온 다음 전송
+	function getSend() {
+		let id = document.querySelector("#id").value;
+		let age = document.querySelector("#age").value
+		
+		let httpRequest = new XMLHttpRequest();
+		httpRequest.open('get', "sendFormAjax1.jsp?id=" + id +"&age=" + age);
+		httpRequest.send();
+	}
+	
+	function postSend() {
+		let id = document.querySelector("#id").value;
+		let age = document.querySelector("#age").value
+		
+		let httpRequest = new XMLHttpRequest();
+		httpRequest.open('post', "sendFormAjax1.jsp");
+		httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		httpRequest.send("id=" + id +"&age=" + age);
+	}
+	
+</script>
+</body>
+</html>

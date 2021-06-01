@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.container {
+		display : flex;
+		background : Lightblue;
+	}
+	.box {
+		width : 100px;
+		height : 100px;
+		display : flex;
+		justify-content : center;
+		align-items : center;
+	}
+</style>
+</head>
+<body>
+	<div class="container">
+		<div class="box">메뉴 1</div>
+		<div class="box">메뉴 2</div>
+		<div class="box">메뉴 3</div>
+		<div class="box">메뉴 4</div>
+	</div>
+	<div id="content"></div>
+<script>
+	// 메뉴4 요소 가져오기 + 이벤트 리스너 연결
+	let last_div = document.querySelector(".container .box:last-child")
+						   .addEventListener('click', makeRequest);
+	
+	// XMLHttpRequest 객체 생성
+	let httpRequest = new XMLHttpRequest();
+	
+	function makeRequest() {
+		httpRequest.open("get", "../data/company.xml");
+		httpRequest.send();
+		httpRequest.onreadystatechange = getXml;
+	}
+	function getXml() {
+		// 응답 영역 가져오기
+		let content = document.getElementById("content");
+		if(httpRequest.readyState == 4) {
+			if(httpRequest.status == 200) {
+				console.log(httpRequest.responseXML);
+				
+				let xmlDoc = httpRequest.responseXML;
+				
+				let name = xmlDoc.getElementsByTagName("name");
+				let part = xmlDoc.getElementsByTagName("part");
+
+				console.log(name);
+				console.log(part);
+				
+				let resText = "<ul>";
+				for(var i=0; i<name.length; i++) {
+					resText += "<li> name : " + name[i].innerHTML + "</li>";
+					resText += "<li> part : " + part[i].innerHTML + "</li>";
+				}
+				resText += "</ul>";
+				content.innerHTML = resText;
+				
+			} else {
+				content.innerHTML = "데이터 없음"
+			}
+		}
+	}
+</script>
+</body>
+</html>
