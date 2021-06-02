@@ -56,7 +56,27 @@
 	</div>
 </form>
 </div>
-
+<script>
+$("#userid").change(function(){
+	/* alert('경고'); */
+	$.ajax({
+		url : "dupId.jsp",
+		type : 'post',
+		data : {
+			userid : $("#userid").val()
+		},
+		success : function(data) {
+			// console.log(data);
+			if($.trim(data)=="true") {
+				alert("아이디 사용 가능");
+			} else {
+				alert("아이디 사용 불가");
+			}
+		}
+	})
+	
+})
+</script>
 <%-- 사용자 validate 코드 삽입하기 --%>
-<script src="../js/join.js"></script>
+<%-- <script src="../js/join.js"></script> --%>
 <%@include file="../layout/footer.jsp" %>
